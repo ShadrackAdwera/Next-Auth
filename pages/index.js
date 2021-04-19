@@ -1,3 +1,7 @@
-export default function Home() {
-  return <h1>Auth</h1>
+import StartingPage from '../components/starting-page/starting-page';
+
+function HomePage() {
+  return <StartingPage />;
 }
+
+export default HomePage;
