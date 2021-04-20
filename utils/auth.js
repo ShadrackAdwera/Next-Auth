@@ -12,7 +12,7 @@ export const hashPassword = async(plainPassword) => {
 export const comparePasswords = async(hashedPassword, plainPassword) => {
     let isPassword;
     try {
-        isPassword = await compare(hashedPassword, plainPassword)
+        isPassword = await compare(plainPassword,hashedPassword);
     } catch (error) {
         console.log(error);
     }
