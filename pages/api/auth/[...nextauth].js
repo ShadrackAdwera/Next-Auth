@@ -19,7 +19,7 @@ export default NextAuth({
                 throw new Error('User not found');
                 }
 
-                const passwordCheck = await comparePasswords(credentials.password, foundUser.password);
+                const passwordCheck = await comparePasswords(foundUser.password, credentials.password);
                 if(!passwordCheck) {
                 client.close();
                 throw new Error('Invalid Password');

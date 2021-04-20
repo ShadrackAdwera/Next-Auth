@@ -1,4 +1,6 @@
 import { useState, useRef } from 'react';
+import { signIn } from 'next-auth/client';
+
 import classes from './auth-form.module.css';
 
 const AuthForm = (props) => {
@@ -10,17 +12,20 @@ const AuthForm = (props) => {
     setIsLogin((prevState) => !prevState);
   }
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async(e) => {
     e.preventDefault();
+  const userEmail = emailRef.current.value;
+  const userPassword = passwordRef.current.value;
+  const userDetails = {
+    email: userEmail,
+    password: userPassword
+  }
     if(isLogin) {
-
+      const result = await signIn('credentials', { redirect: false, email: userEmail, password: userPassword });
+      console.log(result);
+    emailRef.current.value = '';
+    passwordRef.current.value = '';
     } else {
-      const userEmail = emailRef.current.value;
-    const userPassword = passwordRef.current.value;
-    const userDetails = {
-      email: userEmail,
-      password: userPassword
-    }
     props.onSubmit(userDetails);
     emailRef.current.value = '';
     passwordRef.current.value = '';
