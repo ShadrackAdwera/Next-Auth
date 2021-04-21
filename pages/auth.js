@@ -1,6 +1,21 @@
+import { useEffect, useState } from 'react';
+import { getSession } from 'next-auth/client';
+import { useRouter } from 'next/router';
 import AuthForm from '../components/auth/auth-form';
 
 const AuthPage = () => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(()=>{
+    getSession().then(session=>{
+      if(session) {
+        router.replace('/');
+      } else {
+        setIsLoading(false);
+      }
+    })
+  },[router]);
   
   const onSubmit = async(userDetails) => {
     try {
@@ -21,6 +36,9 @@ const AuthPage = () => {
       console.log(error);
     }
 
+  }
+  if(isLoading) {
+    return <p>Loading...</p>
   }
   return <AuthForm onSubmit={onSubmit}/>;
 }
